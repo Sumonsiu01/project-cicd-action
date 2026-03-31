@@ -1,11 +1,12 @@
-name: Greeting
+name: CI
 
-on: push
+on:
+  push:
+    branches: [ main ]
 
 jobs:
-  greet:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Greet users
-        run: echo "hello world!"
+      - uses: actions/checkout@v3
+      - run: echo "Hello GitHub Actions!"
