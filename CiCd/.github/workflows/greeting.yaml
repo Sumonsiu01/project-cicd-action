@@ -1,12 +1,14 @@
-name: CI
+name: Test CI
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: echo "Hello GitHub Actions!"
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Hello
+        run: echo "GitHub Actions is working!"
