@@ -1,9 +1,10 @@
+
 name: Deploy dist
 
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
+  workflow_dispatch:   # Manual run
 
 jobs:
   build:
@@ -11,17 +12,18 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3   # Auto clones the repo
+        uses: actions/checkout@v3  # Auto clones the repo
 
-      - name: Debug GitHub context
+      - name: Debug repo structure
         run: |
-          echo "Cloning repo..."
-          echo "${{ toJSON(github) }}"   # GitHub context print করবে
+          echo "Listing repo files:"
+          ls -R    # দেখে নাও CiCd folder আছে কি না
 
       - name: Build React App
         run: |
+          cd CiCd        # Subfolder-এ ঢুকলেই package.json access হবে
           npm install
           npm run build
 
       - name: Success message
-        run: echo "✅ Workflow completed!"
+        run: echo "✅ React app build completed!"
