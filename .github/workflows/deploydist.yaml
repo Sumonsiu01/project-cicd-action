@@ -1,0 +1,27 @@
+name: Deploy dist
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3   # Auto clones the repo
+
+      - name: Debug GitHub context
+        run: |
+          echo "Cloning repo..."
+          echo "${{ toJSON(github) }}"   # GitHub context print করবে
+
+      - name: Build React App
+        run: |
+          npm install
+          npm run build
+
+      - name: Success message
+        run: echo "✅ Workflow completed!"
