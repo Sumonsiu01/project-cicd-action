@@ -13,37 +13,30 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Debug repo structure
-        run: |
-          echo "Listing repo files:"
-          ls -R
-
-      - name: Build React App
+      - name: Install & Build
         run: |
           cd CiCd
           npm install
           npm run build
 
-      - name: Success message
-        run: echo "✅ React app build completed!"
+      - name: Upload build files
+        uses: actions/upload-artifact@v3
+        with:
+          name: react-build
+          path: CiCd/dist # vite হলে dist, CRA হলে build
 
   deploy:
+    needs: build #er karone first a test hobe pore deploy hobe
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get Code
-        uses: actions/checkout@v3
+      - name: Download build files
+        uses: actions/download-artifact@v3
+        with:
+          name: react-build
 
-      - name: Debug repo structure
-        run: |
-          echo "Listing repo files:"
-          ls -R
-
-      - name: Build React App
-        run: |
-          cd CiCd
-          npm install
-          npm run build
+      - name: Show files
+        run: ls -R
 
       - name: Deploy
         run: echo "🚀 Deploy Successful"
