@@ -3,7 +3,7 @@ name: Deploy dist
 on:
   push:
     branches: [main]
-  workflow_dispatch: # Manual run, a button will create
+  workflow_dispatch:
 
 jobs:
   build:
@@ -11,18 +11,39 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3 # Auto clones the repo
+        uses: actions/checkout@v3
 
       - name: Debug repo structure
         run: |
           echo "Listing repo files:"
-          ls -R    # দেখে নাও CiCd folder আছে কি না
+          ls -R
 
       - name: Build React App
         run: |
-          cd CiCd        # Subfolder-এ ঢুকলেই package.json access হবে
+          cd CiCd
           npm install
           npm run build
 
       - name: Success message
         run: echo "✅ React app build completed!"
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+
+      - name: Debug repo structure
+        run: |
+          echo "Listing repo files:"
+          ls -R
+
+      - name: Build React App
+        run: |
+          cd CiCd
+          npm install
+          npm run build
+
+      - name: Deploy
+        run: echo "🚀 Deploy Successful"
