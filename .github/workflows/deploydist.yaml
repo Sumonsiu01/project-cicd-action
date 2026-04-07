@@ -20,18 +20,18 @@ jobs:
           npm run build
 
       - name: Upload build files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: react-build
-          path: CiCd/dist # vite হলে dist, CRA হলে build
+          path: CiCd/dist
 
   deploy:
-    needs: build #er karone first a test hobe pore deploy hobe
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
       - name: Download build files
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: react-build
 
